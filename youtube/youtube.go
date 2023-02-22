@@ -147,7 +147,7 @@ type videoMetadata struct {
 	Fps                  interface{} `json:"fps"`
 	AudioChannels        int         `json:"audio_channels"`
 	Height               interface{} `json:"height"`
-	Quality              int         `json:"quality"`
+	Quality              float64     `json:"quality"`
 	HasDrm               bool        `json:"has_drm"`
 	Tbr                  float64     `json:"tbr"`
 	URL                  string      `json:"url"`
