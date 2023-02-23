@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -78,7 +79,7 @@ func (svc *Service) doSearchAndDownload(query string) searchAndDownloadResult {
 			return searchAndDownloadResult{
 				Media: core.NewMedia(
 					videoMetadata.Title,
-					videoMetadata.Filename,
+					strings.TrimSuffix(videoMetadata.Filename, filepath.Ext(videoMetadata.Filename))+".opus",
 					videoMetadata.Uploader,
 					fmt.Sprintf("https://www.youtube.com/watch?v=%s", videoMetadata.ID),
 					videoMetadata.Thumbnail,
