@@ -39,7 +39,7 @@ func Load() {
 	}
 	maximumAudioDurationInSeconds, err := strconv.Atoi(strings.TrimSpace(os.Getenv("MAXIMUM_AUDIO_DURATION_IN_SECONDS")))
 	if err != nil {
-		cfg.MaximumAudioDurationInSeconds = 480
+		cfg.MaximumAudioDurationInSeconds = 6000
 	} else {
 		cfg.MaximumAudioDurationInSeconds = maximumAudioDurationInSeconds
 	}
