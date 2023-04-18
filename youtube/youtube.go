@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -64,7 +64,6 @@ func (svc *Service) doSearchAndDownload(query string) searchAndDownloadResult {
 			"--no-color",
 			"--no-check-formats",
 		}
-		log.Printf("yt-dlp %s", strings.Join(args, " "))
 		cmd := exec.Command(youtubeDownloader, args...)
 		if data, err := cmd.Output(); err != nil && err.Error() != "exit status 101" {
 			return searchAndDownloadResult{Error: fmt.Errorf("failed to search and download audio: %s\n%s", err.Error(), string(data))}
@@ -78,7 +77,7 @@ func (svc *Service) doSearchAndDownload(query string) searchAndDownloadResult {
 			return searchAndDownloadResult{
 				Media: core.NewMedia(
 					videoMetadata.Title,
-					videoMetadata.Filename,
+					strings.TrimSuffix(videoMetadata.Filename, filepath.Ext(videoMetadata.Filename))+".opus",
 					videoMetadata.Uploader,
 					fmt.Sprintf("https://www.youtube.com/watch?v=%s", videoMetadata.ID),
 					videoMetadata.Thumbnail,
@@ -147,7 +146,7 @@ type videoMetadata struct {
 	Fps                  interface{} `json:"fps"`
 	AudioChannels        int         `json:"audio_channels"`
 	Height               interface{} `json:"height"`
-	Quality              int         `json:"quality"`
+	Quality              float64     `json:"quality"`
 	HasDrm               bool        `json:"has_drm"`
 	Tbr                  float64     `json:"tbr"`
 	URL                  string      `json:"url"`

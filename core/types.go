@@ -70,6 +70,7 @@ func NewMedia(title, filePath, uploader, url, thumbnail string, durationInSecond
 
 type UserActions struct {
 	SkipChan chan bool
+	LoopChan chan bool
 	StopChan chan bool
 
 	Stopped bool
@@ -89,4 +90,8 @@ func (a *UserActions) Stop() {
 
 func (a *UserActions) Skip() {
 	a.SkipChan <- true
+}
+
+func (a *UserActions) Loop() {
+	a.LoopChan <- true
 }
